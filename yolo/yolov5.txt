@@ -1,0 +1,46 @@
+1.setup the environment (https://youtu.be/h-PlslPNaeI)
+	download 
+		python 3.9.13(add to path)
+			https://www.python.org/downloads/release/python-3913/
+		pytoch pip3 install torch torchvision torchaudio
+			https://pytorch.org/get-started/locally/
+		yolov5 on github
+			https://github.com/ultralytics/yolov5
+			[test the enviroment, download a viedo [input].mp4, put it into yolov5-master/[input].mp4
+				cd ../yolov5-master
+				python detect.py --source [input].mp4
+			the reluat at yolov5-master/runs/detect] 
+			
+2.create dataset folder
+	dataset/images/train (put the train imges)
+	dataset/images/val   (put the vald imges)
+	dataset/images/test  (put the test imges)
+	dataset/label/train  (put the train label)
+	dataset/label/val    (put the vald label)
+	
+	
+3.labeling(choose on below)
+	roboflow(https://roboflow.com/)
+	makesance(https://www.makesense.ai/)
+	lableme(pip install labelme, labelme)
+
+4.traing(https://youtu.be/GRtgLlwxpc4)
+	copy or move dataset folder into: yolov5-master/dataset
+	find: /yolov5-master/data/coco128.yaml
+	save as: /yolov5-master/data/[a].yaml:
+		path: dataset
+		train: images/train 
+		val: images/val 
+		names:
+  			0: tree
+
+5.cmd 
+	cd to yolov5 folder
+		cd ../yolov5-master
+	train 
+		python train.py --img 1280 --batch 2 --epochs 3 --data [a].yaml --weights yolov5s.pt --nosave --cache
+
+6.run
+	the training resalut: /yolov5-master/run/train/exp/weights/last.pt
+	python detect.py --weights runs\train\exp\weights\last.pt --conf 0.4 --source dataset\test\images --view-imgs
+	the reluat at yolov5-master/runs/detect
