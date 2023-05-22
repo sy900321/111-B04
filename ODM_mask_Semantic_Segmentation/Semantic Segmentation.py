@@ -46,7 +46,14 @@ for image_info in annotations['images']:
     cv2.imshow(image_path, ma)
     '''
     
-    cv2.imwrite("segmented/" + image_path, mask)
+    #cv2.imwrite("segmented/" + image_path, mask)
     #cv2.waitKey(0)
+    
+    # 計算白色像素的數量
+    total_pixels = mask.shape[0] * mask.shape[1]
+    white_pixels = cv2.countNonZero(mask)
+    white_ratio = white_pixels / total_pixels
 
+    print(image_path, " 像素數量：", white_pixels, ", ", white_ratio*100)
+    
 cv2.destroyAllWindows()
