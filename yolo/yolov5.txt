@@ -13,10 +13,10 @@
 			
 2.create dataset folder
 	dataset/images/train (put the train imges)
-	dataset/images/val   (put the vald imges)
+	dataset/images/val   (put the valid imges)
 	dataset/images/test  (put the test imges)
 	dataset/label/train  (put the train label)
-	dataset/label/val    (put the vald label)
+	dataset/label/val    (put the valid label)
 	
 	
 3.labeling(choose on below)
