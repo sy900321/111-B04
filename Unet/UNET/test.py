@@ -98,7 +98,7 @@ if __name__ == "__main__":
     H = 512
     W = 512
     size = (W, H)
-    checkpoint_path = os.path.join(".",w_path)#############################
+    checkpoint_path = os.path.join("..",w_path)#############################
 
     """ Load the checkpoint """
     #device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
