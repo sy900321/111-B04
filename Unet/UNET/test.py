@@ -7,6 +7,8 @@ import cv2
 from tqdm import tqdm
 import imageio
 import torch
+import sys
+import getopt
 from sklearn.metrics import accuracy_score, f1_score, jaccard_score, precision_score, recall_score
 
 from model import build_unet
@@ -62,16 +64,42 @@ if __name__ == "__main__":
     with open(txtfile_path, "w") as file:
         file.write("相片\t百分比\t像素數量\n")# 写入文件标题
 
+    # Remove 1st argument from the
+    # list of command line arguments
+    argumentList = sys.argv[1:]
     
+    # Options
+    options = "w:s:"
+     
+    # Long options
+    long_options = ["weights=", "source="]
+     
+    try:
+        # Parsing argument
+        arguments, values = getopt.getopt(argumentList, options, long_options)
+         
+        # checking each argument
+        for currentArgument, currentValue in arguments:
+     
+            if currentArgument in ("-w", "--weights"):
+                w_path = currentValue
+                 
+            elif currentArgument in ("-s", "--source"):                
+                s_path = currentValue
+                
+    except getopt.error as err:
+        # output error, and return with an error code
+        print (str(err))
+        
     """ Load dataset """
-    test_x = sorted(glob(os.path.join("..","new_data","test","image","*")))
+    test_x = sorted(glob(os.path.join("..",s_path,"image","*")))
     #test_y = sorted(glob("../new_data/test/mask/*"))#
 
     """ Hyperparameters """
     H = 512
     W = 512
     size = (W, H)
-    checkpoint_path = os.path.join(".","files","20230718_1257_checkpoint.pth")#############################
+    checkpoint_path = os.path.join(".","files",w_path)#############################
 
     """ Load the checkpoint """
     #device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
