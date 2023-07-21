@@ -1,4 +1,3 @@
-
 import os, time
 from operator import add
 import numpy as np
@@ -92,14 +91,14 @@ if __name__ == "__main__":
         print (str(err))
         
     """ Load dataset """
-    test_x = sorted(glob(os.path.join("..",s_path,"image","*")))
+    test_x = sorted(glob(os.path.join("..",s_path,"*")))
     #test_y = sorted(glob("../new_data/test/mask/*"))#
 
     """ Hyperparameters """
     H = 512
     W = 512
     size = (W, H)
-    checkpoint_path = os.path.join(".","files",w_path)#############################
+    checkpoint_path = os.path.join(".",w_path)#############################
 
     """ Load the checkpoint """
     #device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
