@@ -2,6 +2,8 @@ import os
 import time
 from glob import glob
 import datetime
+import sys
+import getopt
 
 import torch
 from torch.utils.data import DataLoader
@@ -51,6 +53,37 @@ if __name__ == "__main__":
     """ Seeding """
     seeding(42)
 
+    # Remove 1st argument from the
+    # list of command line arguments
+    argumentList = sys.argv[1:]
+     
+    # Options
+    options = "b:e:d:"
+     
+    # Long options
+    long_options = ["batch=", "epochs=", "data=","img="]
+     
+    try:
+        # Parsing argument
+        arguments, values = getopt.getopt(argumentList, options, long_options)
+         
+        # checking each argument
+        for currentArgument, currentValue in arguments:
+     
+            if currentArgument in ("-b", "--batch"):
+                batch_size = int(currentValue)
+                 
+            elif currentArgument in ("-e", "--epochs"):
+                num_epochs = int(currentValue)
+                 
+            elif currentArgument in ("-d", "--data"):
+                path = currentValue
+                
+             
+    except getopt.error as err:
+        # output error, and return with an error code
+        print (str(err))
+
     # Get the current date and time
     current_datetime = datetime.datetime.now()
     formatted_datetime = current_datetime.strftime("%Y%m%d_%H%M")
@@ -60,11 +93,11 @@ if __name__ == "__main__":
     
 
     """ Load dataset """
-    train_x = sorted(glob(os.path.join("..","new_data","train","image","*")))
-    train_y = sorted(glob(os.path.join("..","new_data","train","mask","*")))
+    train_x = sorted(glob(os.path.join("..",path,"train","image","*")))
+    train_y = sorted(glob(os.path.join("..",path,"train","mask","*")))
 
-    valid_x = sorted(glob(os.path.join("..","new_data","test","image","*")))
-    valid_y = sorted(glob(os.path.join("..","new_data","test","mask","*")))
+    valid_x = sorted(glob(os.path.join("..",path,"test","image","*")))
+    valid_y = sorted(glob(os.path.join("..",path,"test","mask","*")))
 
     data_str = f"Dataset Size:\nTrain: {len(train_x)} - Valid: {len(valid_x)}\n"
     print(data_str)
@@ -73,8 +106,8 @@ if __name__ == "__main__":
     H = 512
     W = 512
     size = (H, W)
-    batch_size = 2
-    num_epochs = 50
+    #batch_size = 2
+    #num_epochs = 5
     lr = 1e-4
     #checkpoint_path = os.path.join(".","files","checkpoint.pth")
     checkpoint_path = os.path.join(".","files",f"{formatted_datetime}_checkpoint.pth")
